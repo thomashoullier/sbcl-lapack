@@ -18,17 +18,19 @@
   (c (* double))
   (ldc int :copy))
 
-(defun dgemm (a b c)
+(defun dgemm (a b)
   "Double-float matrices multiplication: C = A . B
    a, b and c are native common lisp 2D arrays of double-float elements.
    The rows and columns are multiplied as usual.
-   The result is stored in c."
-  (let ((a0 (array-dimension a 0))
-        (a1 (array-dimension a 1))
-        (b1 (array-dimension b 1)))
+   Returns a fresh matrix C."
+  (let* ((a0 (array-dimension a 0))
+         (a1 (array-dimension a 1))
+         (b1 (array-dimension b 1))
+         (c (make-array (list a0 b1) :element-type 'double-float)))
     ;; Note SBCL matrices are tranpositions of FORTRAN matrices, so
     ;; we feed the matrices in reverse order to avoid transposition.
     (sb-sys:with-pinned-objects (a b c)
       (dgemm_ "n" "n" b1 a0 a1 1d0
               (double-pointer b) b1 (double-pointer a) a1 0d0
-              (double-pointer c) b1))))
+              (double-pointer c) b1))
+    c))

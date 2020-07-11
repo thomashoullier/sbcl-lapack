@@ -1,7 +1,7 @@
 ;;;; Shared definitions and helpers.
 (in-package :sbcl-lapack)
 
-;;; Loading libblas
+;;; Loading libblas level 3
 (load-shared-object "libblas.so.3")
 
 (defun double-pointer (array)
