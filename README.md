@@ -38,6 +38,9 @@ An error is emitted if the operation was impossible: *eg.* when A is degenerate.
 ## Dependencies
 LAPACK and BLAS should be installed on the system.
 
+`sbcl-lapack`:
+* [array-operations](https://github.com/bendudson/array-operations)
+
 `sbcl-lapack/test`:
 * [rove](https://github.com/fukamachi/rove)
 
