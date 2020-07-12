@@ -17,8 +17,10 @@
   :version "0.1"
   :author "Thomas HOULLIER"
   :description "Rove test suite for sbcl-lapack."
-  :depends-on ("sbcl-lapack" "rove")
+  :depends-on ("sbcl-lapack" "rove" "array-operations")
   :components
   ((:module "test"
-    :components ((:file "rove-suite"))))
+    :components ((:file "package")
+                 (:file "helpers" :depends-on ("package"))
+                 (:file "rove-suite" :depends-on ("package" "helpers")))))
   :perform (test-op (o c) (symbol-call :rove '#:run c)))
