@@ -7,6 +7,7 @@ reliant on SBCL-specific code.
 
 ### List
 * `dgemm`
+* `dgesv`
 
 ### Description
 
@@ -46,10 +47,17 @@ LAPACK and BLAS should be installed on the system.
 (asdf:test-system "sbcl-lapack")
 ```
 
+## Choices
+As far as possible, I try to:
+* Use functional calls.
+* Hide the return codes, turn them into errors and warnings.
+
 ## Caveats
 * The results are put in matrices with copying. Performance could be
   marginally improved.
+* It is possible to make the system crash by providing wrong user inputs.
+  I try to catch the most common mistakes though.
 
 ## References
 * https://www.netlib.org/lapack/explore-html/index.html
-  Documentation for Lapack routines.
+  Documentation for LAPACK/BLAS routines.
