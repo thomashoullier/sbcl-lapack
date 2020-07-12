@@ -3,11 +3,13 @@
   :version "0.1"
   :author "Thomas HOULLIER"
   :description "Bindings to LAPACK/BLAS."
+  :depends-on ("array-operations")
   :components
   ((:module "src"
     :components ((:file "package")
                  (:file "shared" :depends-on ("package"))
-                 (:file "dgemm" :depends-on ("package" "shared")))))
+                 (:file "dgemm" :depends-on ("package" "shared"))
+                 (:file "dgesv" :depends-on ("package" "shared")))))
   :in-order-to ((test-op (test-op "sbcl-lapack/test"))))
 
 (defsystem sbcl-lapack/test

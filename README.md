@@ -13,7 +13,8 @@ reliant on SBCL-specific code.
 **dgemm** a b => c
 
 Perform [dgemm](https://www.netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html#gaeda3cbd99c8fb834a60a6412878226e1),
-double-float matrix multiplication: $C = A B$.
+double-float matrix multiplication: $C = A B$. (Actual dgemm has more
+features than just matrix multiplication).
 
 * *a*, *b*: Native 2D Common Lisp matrices of `double-float` elements.
         The rows and columns are multiplied as expected in matrix
