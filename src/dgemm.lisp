@@ -27,6 +27,8 @@
          (a1 (array-dimension a 1))
          (b1 (array-dimension b 1))
          (c (make-array (list a0 b1) :element-type 'double-float)))
+    (when (/= a1 (array-dimension b 0))
+      (error "Non-compatible dimensions for matrix multiplication."))
     ;; Note SBCL matrices are tranpositions of FORTRAN matrices, so
     ;; we feed the matrices in reverse order to avoid transposition.
     (sb-sys:with-pinned-objects (a b c)

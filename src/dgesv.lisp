@@ -14,8 +14,7 @@
 (defun dgesv (a-in b-in)
   "Compute the solutions X to the linear system of equations
    A.X = B with B the right hand sides. Uses LU decomposition.
-   Return X, info, LUdecomp, permutation-matrix.
-   The operation was successful iff info=0."
+   Return X. Signals an error if the operation cannot be done (eg. degeneracy)."
   (let* (;; We have to copy and transpose the input matrices.
          (a (aops:each-index* 'double-float (i j) (aref a-in j i)))
          (b (aops:each-index* 'double-float (i j) (aref b-in j i)))
@@ -26,8 +25,15 @@
          (ldb (array-dimension b-in 0))
          (info (make-array 1 :element-type '(signed-byte 32)
                              :initial-element -1)))
+    (when (/= lda ldb)
+      (error "A has ~A rows when B has ~A !" lda ldb))
+    (when (/= n ldb)
+      (error "A has ~A columns when B has ~A rows!" n ldb))
+    ;; Note: a stores the LU decomposition and ipiv the transposition
+    ;; matrix, ignored.
     (sb-sys:with-pinned-objects (a b ipiv info)
       (dgesv_ n nrhs (double-pointer a) lda (int-pointer ipiv)
               (double-pointer b) ldb (int-pointer info)))
-    (when (/= 0 (aref info 0)) (warn "dgesv failed with info=~A" (aref info 0)))
-    (values b (aref info 0) a ipiv)))
+    (when (/= 0 (aref info 0))
+      (error "dgesv failed with info=~A" (aref info 0)))
+    (values (aops:each-index* 'double-float (i j) (aref b j i)))))

@@ -21,6 +21,19 @@ features than just matrix multiplication).
         multiplication.
 * *c*: Result matrix.
 
+**dgesv** a b => x
+
+Perform [dgesv](https://www.netlib.org/lapack/explore-html/d7/d3b/group__double_g_esolve_ga5ee879032a8365897c3ba91e3dc8d512.html#ga5ee879032a8365897c3ba91e3dc8d512).
+Solve the linear system of equations for x: $Ax = B$ using LU decomposition.
+x is the matrix of solution corresponding to the right-hand sides in B.
+An error is emitted if the operation was impossible: *eg.* when A is degenerate.
+
+* *a*, *b*: Native 2D matrices of `double-float` elements.
+            *a* is necessarily square. *b* can have as many columns
+            as right-hand sides.
+* *x*: The sets of solutions, in columns, same indices as right-hand
+       sides in *b*.
+
 ## Dependencies
 LAPACK and BLAS should be installed on the system.
 
@@ -34,9 +47,8 @@ LAPACK and BLAS should be installed on the system.
 ```
 
 ## Caveats
-* No user input checks of any kind.
-* The results are put in matrices calling `make-array` each time. Performance
-  could be marginally improved.
+* The results are put in matrices with copying. Performance could be
+  marginally improved.
 
 ## References
 * https://www.netlib.org/lapack/explore-html/index.html
