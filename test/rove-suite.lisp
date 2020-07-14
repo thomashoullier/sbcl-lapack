@@ -34,6 +34,12 @@
                (-0.21052631578947362d0 0.7894736842105263d0)
                (1.3157894736842106d0 -0.6842105263157895d0)))))
       (ok (compare-matrices (sbcl-lapack:dgesv a b) valid-x *eps*) "Test #2"))
+    ;; Test #3
+    (let ((a (double-mat '((3d0))))
+          (b (double-mat '((1d0))))
+          (valid-x (double-mat (list (list (/ 1d0 3d0))))))
+      (ok (compare-matrices (sbcl-lapack:dgesv a b) valid-x *eps*)
+          "Test #3: Matrix of size 1."))
     ;; Error #1: Degenerate
     (let ((a (double-mat '((1d0 2d0 3d0) (1d0 -1d0 1d0) (1d0 2d0 3d0))))
           (b (double-mat '((5d0 -1d0) (3d0 -2d0) (1d0 2d0)))))
