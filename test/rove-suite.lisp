@@ -10,13 +10,33 @@
     ;; Test #2
     (let ((a (double-mat '((1d0 1d0 3d0) (1d0 2d0 3d0))))
           (b (double-mat '((1d0 1d0) (1d0 3d0) (2d0 2d0))))
-          (valid-c (double-mat '((8d0 10d0) (9d0 13d0)))))
-      (ok (compare-matrices (sbcl-lapack:dgemm a b) valid-c *eps*) "Test #2"))
+          (transa "t")
+          (transb "t")
+          (alpha 0.5d0)
+          (beta 1.5d0)
+          (c (double-mat '((2d0 -1d0 2d0) (1d0 -2d0 0d0) (5d0 1d0 -3d0))))
+          (valid-c (double-mat
+                    '((4d0 0.5d0 5d0) (3d0 0.5d0 3d0) (10.5d0 7.5d0 1.5d0)))))
+      (ok (compare-matrices (sbcl-lapack:dgemm a b :transa transa :transb transb
+                                                   :alpha alpha :beta beta :c c)
+                            valid-c *eps*) "Test #2"))
     ;; Error #1: Non-compatible dimensions
     (let ((a (double-mat '((1d0 1d0 3d0 0d0) (1d0 2d0 3d0 1d0))))
           (b (double-mat '((1d0 1d0) (1d0 3d0) (2d0 2d0)))))
       (ok (signals (sbcl-lapack:dgemm a b))
-          "Error #1: Non-compatible dimensions"))))
+          "Error #1: Non-compatible dimensions"))
+    ;; Error #2: C has wrong dimensions
+    (let ((a (double-mat '((1d0 1d0 3d0) (1d0 2d0 3d0))))
+          (b (double-mat '((1d0 1d0) (1d0 3d0) (2d0 2d0))))
+          (transa "t")
+          (transb "t")
+          (alpha 0.5d0)
+          (beta 1.5d0)
+          (c (double-mat
+              '((2d0 -1d0 2d0 4d0) (1d0 -2d0 0d0 1d0) (5d0 1d0 -3d0 0d0)))))
+      (ok (signals (sbcl-lapack:dgemm a b :transa transa :transb transb
+                                          :alpha alpha :beta beta :c c))
+          "Error #2: C dimensions"))))
 
 (deftest solving
   (testing "dgesv"

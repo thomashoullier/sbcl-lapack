@@ -36,4 +36,4 @@
               (double-pointer b) ldb (int-pointer info)))
     (when (/= 0 (aref info 0))
       (error "dgesv failed with info=~A" (aref info 0)))
-    (values (aops:each-index* 'double-float (i j) (aref b j i)))))
+    (aops:each-index* 'double-float (i j) (aref b j i))))

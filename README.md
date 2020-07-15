@@ -11,16 +11,18 @@ reliant on SBCL-specific code.
 
 ### Description
 
-**dgemm** a b => c
+**dgemm** a b &key transa transb alpha beta c => x
 
 Perform [dgemm](https://www.netlib.org/lapack/explore-html/d1/d54/group__double__blas__level3_gaeda3cbd99c8fb834a60a6412878226e1.html#gaeda3cbd99c8fb834a60a6412878226e1),
-double-float matrix multiplication: $C = A B$. (Actual dgemm has more
-features than just matrix multiplication).
+double-float matrix multiplication: $X = \alpha \cdot A.B + \beta \cdot C$.
 
-* *a*, *b*: Native 2D Common Lisp matrices of `double-float` elements.
+* *a*, *b*, *c*: Native 2D Common Lisp matrices of `double-float` elements.
         The rows and columns are multiplied as expected in matrix
         multiplication.
-* *c*: Result matrix.
+* *transa*, *transb*: Case-insensitive. Can be `"n"` for no
+  transposition to apply. `"t"` or `"c"` to apply a transposition.
+* *alpha*, *beta*: `double-float` scalars.
+* *x*: Result matrix.
 
 **dgesv** a b => x
 
