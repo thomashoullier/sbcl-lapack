@@ -9,7 +9,8 @@
     :components ((:file "package")
                  (:file "shared" :depends-on ("package"))
                  (:file "dgemm" :depends-on ("package" "shared"))
-                 (:file "dgesv" :depends-on ("package" "shared")))))
+                 (:file "dgesv" :depends-on ("package" "shared"))
+                 (:file "dgetrf" :depends-on ("package" "shared")))))
   :in-order-to ((test-op (test-op "sbcl-lapack/test"))))
 
 (defsystem sbcl-lapack/test
