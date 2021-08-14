@@ -28,7 +28,7 @@
    the letters 't' or 'c' are passed."
   (let ((a (aops:each-index* 'double-float (i j) (aref a-in j i)))
         (b (aops:each-index* 'double-float (i j) (aref b-in j i)))
-        (c) (nota T) (notb T)
+        (c) (notb T)
         (a0 (array-dimension a-in 0))
         (a1 (array-dimension a-in 1))
         (b0 (array-dimension b-in 0))
@@ -38,8 +38,7 @@
     (cond ((equalp "n" transa)
            (setf m a0))
           ((or (equalp "t" transa) (equalp "c" transa))
-           (setf m a1
-                 nota nil))
+           (setf m a1))
           (t (error "transa invalid: ~A" transa)))
     (cond ((equalp "n" transb)
            (setf k a1
