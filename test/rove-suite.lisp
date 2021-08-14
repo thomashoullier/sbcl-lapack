@@ -77,4 +77,17 @@
     (let ((a (double-mat '((1d0 3d0) (1d0 -1d0) (4d0 5d0))))
           (b (double-mat '((5d0 -1d0) (3d0 -2d0) (1d0 2d0)))))
       (ok (signals (sbcl-lapack:dgesv a b))
-          "Error #4: A non-valid number of columns."))))
+          "Error #4: A non-valid number of columns.")))
+  (testing "dgetrf"
+    ;; Test #1
+    (let ((a (double-mat '((2d0 0d0 2d0 0.6d0) (3d0 3d0 4d0 -2d0)
+                           (5d0 5d0 4d0 2d0) (-1d0 -2d0 3.4d0 -1d0))))
+          (lu-val (double-mat '((5d0 5d0 4d0 2d0)
+                                (0.4d0 -2d0 0.4d0 -0.2d0)
+                                (-0.2d0 0.5d0 4d0 -0.5d0)
+                                (0.6d0 0d0 0.4d0 -3d0))))
+          (ipiv-val #(3 3 4 4))
+          (lu) (ipiv))
+      (multiple-value-setq (lu ipiv) (sbcl-lapack:dgetrf a))
+      (ok (and (compare-matrices lu lu-val *eps*)
+               (equalp ipiv ipiv-val)) "Test #1"))))

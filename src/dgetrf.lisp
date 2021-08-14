@@ -14,7 +14,9 @@
   "Compute the LUP decomposition of matrix A.
    Return:
    * A: Storing LU in the same matrix, omitting the unit diagonal in L.
-   * ipiv: permutation vector representing matrix P.
+   * ipiv: permutation vector representing matrix P. Note that it is in
+           a format where line swaps should be applied in sequence to
+           get the final matrix.
    A = P.L.U"
   (let* (;; Copy and transpose the input matrix A.
          (m (array-dimension a-in 0))

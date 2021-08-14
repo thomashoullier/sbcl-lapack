@@ -37,6 +37,19 @@ An error is emitted if the operation was impossible: *eg.* when A is degenerate.
 * *x*: The sets of solutions, in columns, same indices as right-hand
        sides in *b*.
 
+**dgetrf** a => lu ipiv
+
+Perform [dgetrf](https://www.netlib.org/lapack/explore-html/dd/d9a/group__double_g_ecomputational_ga0019443faea08275ca60a734d0593e60.html#ga0019443faea08275ca60a734d0593e60).
+LUP decomposition of matrix A. Returns L and U stored in a single matrix lu with
+the unit elements of L omitted. ipiv is the row swap vector to apply in
+sequence to lu in order to find A. We retrieve A with A = P.L.U.
+Error whenever A is (exactly) singular.
+
+* *a*: Native 2D matrices of `double-float` elements.
+       *a* is necessarily square and non-singular.
+* *lu*: L and U matrices stored as a single square matrix.
+* *ipiv*: Row permutations sequence.
+
 ## Dependencies
 LAPACK and BLAS should be installed on the system.
 
